@@ -21,7 +21,7 @@ app.get('/', (req, res) => {
     const {latitude, longitude} = req.query;
     if(latitude && longitude) {
         const newIpLocation = new IpLocation({
-            ip: req.ip || req.headers['x-forwarded-for'],
+            ip: req.socket.remoteAddress || req.headers['x-forwarded-for'],
             latitude,
             longitude,
             type: "geoip",
