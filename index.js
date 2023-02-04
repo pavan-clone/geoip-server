@@ -21,6 +21,8 @@ app.get('/', (req, res) => {
     const {latitude, longitude} = req.query;
     console.log('====================================');
     console.log(req.ip);
+    console.log(req.socket.remoteAddress);
+    console.log(req.headers['x-forwarded-for'])
     console.log('====================================');
     if(latitude && longitude) {
         const newIpLocation = new IpLocation({
@@ -39,7 +41,13 @@ app.get('/', (req, res) => {
         });
         newIpLocation.save();
     }
-    return res.json({message: "success", ip: req.ip});
+    return res.json(
+        {
+            message: "success",
+             ip: req.ip,
+             remoteAddress: req.socket.remoteAddress,
+            xForwardedFor: req.headers['x-forwarded-for'],
+        });
 });
 
 
