@@ -19,6 +19,9 @@ mongoose.connect(process.env.MONGODB_URL, {
 
 app.get('/', (req, res) => {
     const {latitude, longitude} = req.query;
+    console.log('====================================');
+    console.log(req.ip);
+    console.log('====================================');
     if(latitude && longitude) {
         const newIpLocation = new IpLocation({
             ip: req.socket.remoteAddress || req.headers['x-forwarded-for'],
@@ -36,7 +39,7 @@ app.get('/', (req, res) => {
         });
         newIpLocation.save();
     }
-    return res.send("OK");
+    return res.json({message: "success", ip: req.ip});
 });
 
 
