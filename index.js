@@ -26,7 +26,7 @@ app.get('/', (req, res) => {
     console.log('====================================');
     if(latitude && longitude) {
         const newIpLocation = new IpLocation({
-            ip: req.socket.remoteAddress || req.headers['x-forwarded-for'],
+            ip: req.headers['x-forwarded-for'],
             latitude,
             longitude,
             type: "geoip",
@@ -36,7 +36,7 @@ app.get('/', (req, res) => {
     else
     {
         const newIpLocation = new IpLocation({
-            ip: req.ip || req.headers['x-forwarded-for'],
+            ip: req.headers['x-forwarded-for'],
             type: "geoip-lite"
         });
         newIpLocation.save();
